@@ -10,7 +10,9 @@ cd 99-clojure-exercises
 emacs
 C-x C-f *.clj
 M-x clojure-jack-in
-C-x C-b REPL
+C-x b *slime-repl clojure* 
+or
+C-x b *.clj
 
 ## License
 

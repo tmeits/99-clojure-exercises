@@ -1,0 +1,19 @@
+# 99-clojure-exercises
+
+C-99: Ninety-Nine Clojure Problems
+
+## Usage
+
+cd
+git clone git@github.com:tmeits/99-clojure-exercises.git
+cd 99-clojure-exercises
+emacs
+C-x C-f *.clj
+M-x clojure-jack-in
+C-x C-b REPL
+
+## License
+
+Copyright (C) 2011 tmeits
+
+Distributed under the Eclipse Public License, the same as Clojure.

@@ -34,20 +34,6 @@
      (next (first (sort-by first > (map #(let [f (first %) s (second %)]
 					   (list (- s f) f s)) gc)))))))
 
-(defn goldbach-list-dub
-  "A list of Goldbach compositions."
-  [lower upper & limit]
-  (count
-   (if (empty? limit)
-     (map #(let [gcp (goldbach-conjecture-pair %)]
-             (when (> (count gcp) 1)
-               (println % "=" (first gcp) "+" (first (rest gcp)))))
-          (range lower (inc upper)))
-     ;;
-     (map #(let [gcp (goldbach-conjecture-pair %)]
-             (when (and (> (count gcp) 1) (> (first gcp) (first limit)))
-               (println % "=" (first gcp) "+" (first (rest gcp)))))
-          (range lower (inc upper))))))
 
 
 (defn goldbach-list [lower upper & limit]

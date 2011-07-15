@@ -67,7 +67,7 @@ p99.arithmetic>
 
   )
 
-;; Okey. gplus.to/ilynva
+
 ;; http://unityenvironment.blogspot.com/
 ;; http://bigdingus.com/category/clojure/
 ;; http://code.google.com/p/jngmisc/source/browse/clojure/primes/primes.clj

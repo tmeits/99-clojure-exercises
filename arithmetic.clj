@@ -3,6 +3,38 @@
   (:use clojure.contrib.profile)
   (:use clojure.test))
 
+(require '(clojure.contrib [error-kit :as kit]))
+
+(kit/deferror *disjoint-subsets-error* [] [n]
+    {:msg (str "*** ОШИБКА :" n)
+     :unhandled (kit/throw-msg NumberFormatException)})
+
+;; For example, {1, 2, 3} and {4, 5, 6} are disjoint sets.
+(defn c27-disjoint-subsets
+  "Group the elements of a set into disjoint subsets."
+  [set size]
+  (cond
+   (empty? size)
+   (kit/raise *disjoint-subsets-error* "Данная размерность второго аргумента недостаточна для работы.: ")
+   (empty? (rest size))
+   (if (= (first size) (count set))
+     (list set)
+     (kit/raise *disjoint-subsets-error* "Cardinal mismatch |set| = ~A" ))
+   :else ; «Множество есть совокупность различных элементов, мыслимая как единое целое» Бертран Рассел
+   (loop [r nil s (clojure.core/set set) c size] ; 
+     (if (empty? c)
+       (reverse r)
+       (recur
+        (conj r (take (first c) s))     ; Conjoin: Adds value(s) to set
+        (drop (first c) s)              ; As take, but removes the specified items and returns the rest.
+        (rest c))))))
+
+;; 9 рабочих разобьем на 3 непересекающиеся множества-подгруппы по 2, 3 и 4 человека
+(c27-disjoint-subsets '(aldo beat carla david evi flip gary hugo ida) '(2 3 4))
+;; ((aldo gary) (david carla ida) (beat hugo evi flip))
+
+(count (combinations '(a b c d e f g h i j k l) 3)) ; 220
+
 (deftest goldbach-conjecture-test
   (do
     (is (= '(5 37) (goldbach-conjecture-pair 42)))

@@ -5,8 +5,8 @@
   (:use clojure.contrib.profile)
   (:use clojure.test))
 
-;; Являются ди два целых числа взаимно простыми?
-(defn c33?
+;; Являются ли два целых числа взаимно простыми?
+(defn coprime?
   "Determine whether two positive integer numbers are coprime."
   [a b]
   ;; Целые числа называются взаимно простыми,
@@ -15,8 +15,8 @@
 
 ;;Примеры: 14 и 25 взаимно просты, а 15 и 25 не взаимно просты (у них имеется общий делитель 5).
 
-(c33? 14 25) ; true
-(c33? 15 25) ; false
+(coprime? 14 25) ; true
+(coprime? 15 25) ; false
 
 
 (deftest goldbach-conjecture-test

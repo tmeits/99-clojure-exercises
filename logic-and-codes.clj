@@ -44,8 +44,31 @@
   (for [x '(true false) y '(true false)]
     ((fn [p1 p2] (def A p1) (def B p2)  (list p1 p2 (eval sexp))) x y)))
 
+(defn c99-truth-tables-two [a b sexp]
+  "Truth tables for logical expressions.
+  Define a function that takes a logical expression (a function of two variables)
+  and prints the truth table."
+  (cond
+    (= a b) '()
+    :else 
+    (for [x '(true false) y '(true false)]
+    ((fn [p1 p2] (def a p1) (def b p2)  (list p1 p2 (eval sexp))) x y))
+    ))
+
+(defmacro defn-with-str [string args & body]
+ `(defn ~(symbol string) ~args ~@body))
+
+(defn-with-str "print-string" [k] (println k))
+
+(print-string "lol")
+
+
+
 (deftest table-test "Truth tables for logical expressions."
   (is (= (c99-truth-tables 'A 'B '(and A (or A B)))
+         '((true true true) (true false true) (false true false) (false false false)))
+      "")
+  (is (= (c99-truth-tables-two 'D 'F '(and D (or D F)))
          '((true true true) (true false true) (false true false) (false false false)))
       ""))
 
@@ -86,6 +109,8 @@
 ;; http://www.haskell.org/haskellwiki/99_questions/Solutions/46
 ;; http://www.clojure-toolbox.com/
 ;; http://habrahabr.ru/blogs/Git/117187/#habracut
+;; http://stackoverflow.com/questions/678867/how-to-defn-a-function-from-string-in-clojure
+;; http://stackoverflow.com/questions/3407921/clojure-resolving-function-from-string-name
 ;; Tips
 ;; C-\
 ;; http://clojure.org/repl_and_main

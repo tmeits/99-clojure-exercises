@@ -55,18 +55,25 @@
      ((fn [p1 p2] (intern *ns* (symbol (str a)) p1) (intern *ns* (symbol (str b)) p2)
         (list p1 p2 (eval sexp))) i j))))
 
+;; http://stackoverflow.com/questions/4208680/in-clojure-how-can-i-undef-a-var-from-a-namespace
+
+(defn c99-truth-tables-unmap [a b sexp]   "Truth tables for logical expressions."
+  (let
+      [res
+       (for [i '(true false) j '(true false)]
+         ((fn [p1 p2]
+            (intern *ns* (symbol (str a)) p1) (intern *ns* (symbol (str b)) p2)
+            (list p1 p2 (eval sexp))) i j))]
+    (ns-unmap *ns* a) (ns-unmap *ns* b) (println res)))
+
 
 (deftest table-test "Truth tables for logical expressions."
   (is (= (c99-truth-tables 'A 'B '(and A (or A B)))
-         '((true true true) (true false true) (false true false) (false false false)))
-      "")
+         '((true true true) (true false true) (false true false) (false false false))))
   (is (= (c99-truth-tables-two 'D 'D '(and D (or D F)))
-         '())
-      "")
+         '()))
   (is (= (c99-truth-tables-two 'A 'B '(and A (or A B)))
-         '((true true true) (true false true) (false true false) (false false false)))
-    "")
-  )
+         '((true true true) (true false true) (false true false) (false false false)))))
 
 (deftest logic-and-code "Test codee for remaining logic functions"
   (are [x y] (= x y)
@@ -107,9 +114,11 @@
 ;; http://habrahabr.ru/blogs/Git/117187/#habracut
 ;; http://stackoverflow.com/questions/678867/how-to-defn-a-function-from-string-in-clojure
 ;; http://stackoverflow.com/questions/3407921/clojure-resolving-function-from-string-name
+;; http://stackoverflow.com/questions/1523240/let-vs-binding-in-clojure
 ;; Tips
 ;; C-\
 ;; http://clojure.org/repl_and_main
 ;; http://www.mari.ru/mmlab/home/lisp/LECTION3/index.html
 
 (run-tests)
+

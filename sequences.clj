@@ -42,6 +42,7 @@
 ;; http://blog.bensmann.com/setting-up-a-clojure-development-environment
 ;; http://p.hagelb.org/paredit-outline
 ;; http://hugoduncan.org/post/2010/swank_clojure_gets_a_break_with_the_local_environment.xhtml
+;; http://code.google.com/p/fenoma/source/browse/trunk/prototype/Fonts/menlo/Menlo.ttc?r=2
 
 (defn c03-element-at
   [coll n]

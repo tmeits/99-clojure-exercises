@@ -7,6 +7,7 @@
 (ns c99.log-cod
   (:use clojure.contrib.math)
   (:require clojure.contrib.string)
+  (use 'clojure.contrib.pprint)
   (:use clojure.contrib.profile)
   (:use clojure.test))
 
@@ -81,13 +82,12 @@
   (clojure.contrib.string/map-str #(if (= % ch1) ch2 (identity %)) str))
 
 (defn  truth-tables [s-expr & abc] "Truth tables for logical expressions."
-  (println (pr-str s-expr))
-  (println abc)
   (for [i '(true false) j '(true false)]
     (list i j 
-          (load-string (replace-char (first (pr-str (first (next abc)))) i
-                        (replace-char (first (pr-str (first abc))) j
+          (load-string (replace-char (first (pr-str (first (next abc)))) j
+                        (replace-char (first (pr-str (first abc))) i
                                       (pr-str s-expr)))))))
+(pprint (truth-tables  '(and A (or A B)) 'A 'B))
 ;; http://taop.rpod.ru/172639.html
 ;; http://whollyweirdwyrd.blogspot.com/2010/01/recursive-walk-on-string.html
 

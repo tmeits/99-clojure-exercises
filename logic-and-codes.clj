@@ -69,10 +69,10 @@
     ))
 
 (defn- t-f [n] (if (= (rem n 2) 0) true false))
-(defn- create-table [n] (take n (repeat (map t-f (range n)))))
+(defn- create-table [n]  (take n (repeat  (map t-f (range n)))))
 
 (defn c99-truth-tables-doseq [a b sexp]  "Truth tables for logical expressions."
-  (doseq [i '(true false) j '(true false)]
+  (doseq [i (map t-f (range 2)) j (map t-f (range 2))]
     (intern *ns* (symbol (str a)) i) (intern *ns* (symbol (str b)) j)
     (println i j (eval sexp)))
   (ns-unmap *ns* a) (ns-unmap *ns* b))

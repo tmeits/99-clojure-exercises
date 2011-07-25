@@ -6,6 +6,7 @@
 
 (ns c99.log-cod
   (:use clojure.contrib.math)
+  (:require clojure.contrib.string)
   (:use clojure.contrib.profile)
   (:use clojure.test))
 
@@ -75,7 +76,20 @@
     (intern *ns* (symbol (str a)) i) (intern *ns* (symbol (str b)) j)
     (println i j (eval sexp)))
   (ns-unmap *ns* a) (ns-unmap *ns* b))
+ 
+(defn  replace-char [ch1 ch2  str]
+  (clojure.contrib.string/map-str #(if (= % ch1) ch2 (identity %)) str))
 
+(defn  truth-tables [s-expr & abc] "Truth tables for logical expressions."
+  (println (pr-str s-expr))
+  (println abc)
+  (for [i '(true false) j '(true false)]
+    (list i j 
+          (load-string (replace-char (first (pr-str (first (next abc)))) i
+                        (replace-char (first (pr-str (first abc))) j
+                                      (pr-str s-expr)))))))
+;; http://taop.rpod.ru/172639.html
+;; http://whollyweirdwyrd.blogspot.com/2010/01/recursive-walk-on-string.html
 
 (deftest table-test "Truth tables for logical expressions."
   (is (= (c99-truth-tables 'A 'B '(and A (or A B)))
@@ -84,6 +98,8 @@
   (is (= (c99-truth-tables-two 'A 'B '(and A (or A B)))
          '((true true true) (true false true) (false true false) (false false false))))
   (is (= (c99-truth-tables-unmap 'A 'B '(and A (or A B)))
+         '((true true true) (true false true) (false true false) (false false false))))
+  (is (= (truth-tables  '(and A (or A B)) 'A 'B)
          '((true true true) (true false true) (false true false) (false false false)))))
 
 (deftest logic-and-code "Test codee for remaining logic functions"

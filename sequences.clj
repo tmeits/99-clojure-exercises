@@ -1,18 +1,18 @@
 ;; Ninety-Nine Problems In Clojure. Sequences.
 (ns c99.seq)
-(System/getProperty "java.class.path")
 
 (defn clojure-seq-02 [coll]
-  " ру Find the last but one box of a list."
+  "Find the last but one box of a list."
   (let [r (reverse coll)]
     (reverse (cons (first r)                       
                    (list (first (next r)))))))
 ;; Test
-(clojure-seq-02 '(a b c d))
+(clojure-seq-02 '(a b c d))             ;(c d)
 
 ;; Recursive solution
 (defn clojure-seq-02-rec [coll]
-   (cond 
+  ""Find the last but one box of a list.""
+  (cond 
    (empty? coll)  (print "Empty collection!")
    (empty? (rest coll)) (print "Collection too short!")
    (empty? (rest (rest coll))) coll

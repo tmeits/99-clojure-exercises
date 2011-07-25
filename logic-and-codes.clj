@@ -63,16 +63,28 @@
        (for [i '(true false) j '(true false)]
          ((fn [p1 p2]
             (intern *ns* (symbol (str a)) p1) (intern *ns* (symbol (str b)) p2)
-            (list p1 p2 (eval sexp))) i j))]
-    (ns-unmap *ns* a) (ns-unmap *ns* b) (println res)))
+            (list p1 p2 (if (eval sexp) "trues"  "false"))) i j))]
+    (print res)
+    (ns-unmap *ns* a) (ns-unmap *ns* b) res
+    ))
+
+(defn- t-f [n] (if (= (rem n 2) 0) true false))
+(defn- create-table [n] (take n (repeat (map t-f (range n)))))
+
+(defn c99-truth-tables-doseq [a b sexp]  "Truth tables for logical expressions."
+  (doseq [i '(true false) j '(true false)]
+    (intern *ns* (symbol (str a)) i) (intern *ns* (symbol (str b)) j)
+    (println i j (eval sexp)))
+  (ns-unmap *ns* a) (ns-unmap *ns* b))
 
 
 (deftest table-test "Truth tables for logical expressions."
   (is (= (c99-truth-tables 'A 'B '(and A (or A B)))
          '((true true true) (true false true) (false true false) (false false false))))
-  (is (= (c99-truth-tables-two 'D 'D '(and D (or D F)))
-         '()))
+  (is (= (c99-truth-tables-two 'D 'D '(and D (or D F))) '()))
   (is (= (c99-truth-tables-two 'A 'B '(and A (or A B)))
+         '((true true true) (true false true) (false true false) (false false false))))
+  (is (= (c99-truth-tables-unmap 'A 'B '(and A (or A B)))
          '((true true true) (true false true) (false true false) (false false false)))))
 
 (deftest logic-and-code "Test codee for remaining logic functions"
@@ -115,10 +127,11 @@
 ;; http://stackoverflow.com/questions/678867/how-to-defn-a-function-from-string-in-clojure
 ;; http://stackoverflow.com/questions/3407921/clojure-resolving-function-from-string-name
 ;; http://stackoverflow.com/questions/1523240/let-vs-binding-in-clojure
+;; http://www.exampler.com/blog/2010/09/01/editing-trees-in-clojure-with-clojurezip/
 ;; Tips
 ;; C-\
 ;; http://clojure.org/repl_and_main
 ;; http://www.mari.ru/mmlab/home/lisp/LECTION3/index.html
-
+;; http://blog.gaz-jones.com/post/2528825514/command-line-applications-in-clojure
 (run-tests)
 

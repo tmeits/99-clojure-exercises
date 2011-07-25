@@ -64,9 +64,8 @@
          ((fn [p1 p2]
             (intern *ns* (symbol (str a)) p1) (intern *ns* (symbol (str b)) p2)
             (list p1 p2 (if (eval sexp) "trues"  "false"))) i j))]
-    (print res)
-    (ns-unmap *ns* a) (ns-unmap *ns* b) res
-    ))
+    (pr-str res)
+    (ns-unmap *ns* a) (ns-unmap *ns* b)  res))
 
 (defn- t-f [n] (if (= (rem n 2) 0) true false))
 (defn- create-table [n]  (take n (repeat  (map t-f (range n)))))

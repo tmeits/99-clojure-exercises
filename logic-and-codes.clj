@@ -102,7 +102,7 @@
   (is (= (truth-tables  '(and A (or A B)) 'A 'B)
          '((true true true) (true false true) (false true false) (false false false)))))
 
-(deftest logic-and-code "Test codee for remaining logic functions"
+(deftest logic-and-code "Test code for remaining logic functions"
   (are [x y] (= x y)
        (c99-not true) false
        (c99-not false) true

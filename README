@@ -5,7 +5,7 @@ C-99: Ninety-Nine Clojure Problems
 ## Usage EMACS REPL
 
 cd
-git clone git@github.com:tmeits/99-clojure-exercises.git
+git clone git://github.com/tmeits/99-clojure-exercises.git
 cd 99-clojure-exercises
 emacs
 C-x C-f *.clj
@@ -17,14 +17,14 @@ C-x b *.clj
 ## Usage Console
 
 cd
-git clone git@github.com:tmeits/99-clojure-exercises.git
+git clone git://github.com/tmeits/99-clojure-exercises.git
 cd 99-clojure-exercises
 java -cp src:lib/clojure-1.2.1.jar clojure.main
 
 ## Usage lein
 
 cd
-git clone git@github.com:tmeits/99-clojure-exercises.git
+git clone git://github.com/tmeits/99-clojure-exercises.git
 cd 99-clojure-exercises
 lein repl
 

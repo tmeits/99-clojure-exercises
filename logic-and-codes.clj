@@ -148,5 +148,9 @@
 ;; http://clojure.org/repl_and_main
 ;; http://www.mari.ru/mmlab/home/lisp/LECTION3/index.html
 ;; http://blog.gaz-jones.com/post/2528825514/command-line-applications-in-clojure
+
+;; http://progit.org/book/ru/
+;; http://hyperpolyglot.org/lisp
+
 (run-tests)
 

@@ -152,5 +152,16 @@
 ;; http://progit.org/book/ru/
 ;; http://hyperpolyglot.org/lisp
 
+(defn c99-gray-code "Gray code"
+  [n]
+;; An n-bit Gray code is a sequence of n-bit strings constructed according to certain rules. For example,
+;; n = 1: C(1) = ['0','1'].
+;; n = 2: C(2) = ['00','01','11','10'].
+;; n = 3: C(3) = ['000','001','011','010',´110´,´111´,´101´,´100´].
+;; http://en.wikipedia.org/wiki/Gray_code
+  (if (= 1 n)
+    (vector 0 1)
+    (println "...")))
+;; http://www.informatimago.com/develop/lisp/l99/p49.lisp
 (run-tests)
 

@@ -2,6 +2,20 @@
 
 C-99: Ninety-Nine Clojure Problems
 
+## Install Java + lein
+
+$ sudo add-apt-repository "deb http://archive.canonical.com/ lucid partner"
+$ sudo apt-get update
+$ sudo apt-get install sun-java6-jdk
+$ sudo apt-get install ant
+$ sudo su
+# cd /bin
+# wget https://github.com/technomancy/leiningen/raw/stable/bin/lein
+# chmod +x lein
+# exit
+$ lein self-install
+
+
 ## Usage EMACS REPL
 
 cd

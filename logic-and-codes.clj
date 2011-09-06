@@ -152,5 +152,7 @@
 ;; http://progit.org/book/ru/
 ;; http://hyperpolyglot.org/lisp
 
+
+;; http://www.rsdn.ru/article/alg/gray.xml
 (run-tests)
 

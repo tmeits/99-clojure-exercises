@@ -7,7 +7,7 @@
 (ns c99.log-cod
   (:use clojure.contrib.math)
   (:require clojure.contrib.string)
-  (use 'clojure.contrib.pprint)
+  (:use clojure.contrib.pprint)
   (:use clojure.contrib.profile)
   (:use clojure.test))
 
@@ -155,6 +155,14 @@
 
 ;; http://www.rsdn.ru/article/alg/gray.xml
 
+(defn bin-to-gray [b]
+  "Binary to Gray code conversion"
+  (bit-xor (bit-shift-right b 1) b))
+
+(deftest test-bin-to-gray
+  (is (= (Integer/toString (bin-to-gray 7) 2) "100"))
+  (is (= (Integer/toString (bin-to-gray 15) 2) "1000")))
+
 (defn c99-gray-code "Gray code"
   [n]
 ;; An n-bit Gray code is a sequence of n-bit strings constructed according to certain rules. For example,
@@ -166,6 +174,8 @@
     (vector 0 1)
     (println "...")))
 ;; http://www.informatimago.com/develop/lisp/l99/p49.lisp
+;; http://www.gettingclojure.com/cookbook:numbers
+;; Bitwise operations: bit-and bit-or bit-xor bit-not bit-shift-right bit-shift-left
 
 (run-tests)
 

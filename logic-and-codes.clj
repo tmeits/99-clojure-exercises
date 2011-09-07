@@ -159,6 +159,11 @@
   "Binary to Gray code conversion"
   (bit-xor (bit-shift-right b 1) b))
 
+(defn print-gray [b] "" 
+  (let [c (read-string (clojure.contrib.string/map-str #(str %) (cons "2r" (repeat b "1"))))]
+    (println c)
+    (map #(Integer/toString (bin-to-gray %) 2) (range 0 (+ 1 c)))))
+
 (deftest test-bin-to-gray
   (is (= (Integer/toString (bin-to-gray 7) 2) "100"))
   (is (= (Integer/toString (bin-to-gray 15) 2) "1000")))

@@ -154,15 +154,18 @@
 
 
 ;; http://www.rsdn.ru/article/alg/gray.xml
+;; http://clojure-euler.wikispaces.com/Problem+001
 
 (defn bin-to-gray [b]
   "Binary to Gray code conversion"
   (bit-xor (bit-shift-right b 1) b))
 
-(defn print-gray [b] "" 
-  (let [c (read-string (clojure.contrib.string/map-str #(str %) (cons "2r" (repeat b "1"))))]
-    (println c)
-    (map #(Integer/toString (bin-to-gray %) 2) (range 0 (+ 1 c)))))
+(defn print-gray [b] ""
+  (defn make-string [n s] ""
+    (clojure.contrib.string/map-str #(str %) (repeat n s)))
+  (let [c (read-string (str "2r" (make-string b "1")))]
+    (map #(if (< (count %) b) (str (make-string (- b (count %)) "0") %) %)
+         (map #(Integer/toString (bin-to-gray %) 2) (range 0 (+ 1 c))))))
 
 (deftest test-bin-to-gray
   (is (= (Integer/toString (bin-to-gray 7) 2) "100"))

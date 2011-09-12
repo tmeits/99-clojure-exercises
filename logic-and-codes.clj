@@ -162,26 +162,47 @@
 
 (defn print-gray [b] ""
   (defn make-string [n s] ""
-    (clojure.contrib.string/map-str #(str %) (repeat n s)))
+    (reduce #(str %1 %2) (repeat n s)))
   (let [c (read-string (str "2r" (make-string b "1")))]
     (map #(if (< (count %) b) (str (make-string (- b (count %)) "0") %) %)
          (map #(Integer/toString (bin-to-gray %) 2) (range 0 (+ 1 c))))))
 
 (deftest test-bin-to-gray
   (is (= (Integer/toString (bin-to-gray 7) 2) "100"))
-  (is (= (Integer/toString (bin-to-gray 15) 2) "1000")))
+  (is (= (Integer/toString (bin-to-gray 15) 2) "1000"))
+  (is (= (nth (print-gray 4) 14) "1001")))
 
-(defn c99-gray-code "Gray code"
-  [n]
-;; An n-bit Gray code is a sequence of n-bit strings constructed according to certain rules. For example,
-;; n = 1: C(1) = ['0','1'].
-;; n = 2: C(2) = ['00','01','11','10'].
-;; n = 3: C(3) = ['000','001','011','010',´110´,´111´,´101´,´100´].
 ;; http://en.wikipedia.org/wiki/Gray_code
-  (if (= 1 n)
-    (vector 0 1)
-    (println "...")))
 ;; http://www.informatimago.com/develop/lisp/l99/p49.lisp
+ 
+(defn gray [n]
+  "Код Грея для n бит может быть рекурсивно построен на основе кода для n–1 бит путём переворачивания списка бит (то есть записыванием кодов в обратном порядке), конкатенации исходного и перевёрнутого списков, дописывания нулей в начало каждого кода в исходном списке и единиц — в начало кодов в перевёрнутом списке. Так, для генерации списка для n = 3 бит на основании кодов для двух бит необходимо выполнить следующие шаги:
+Коды для n = 2 бит: 	00, 01, 11, 10 	
+Перевёрнутый список кодов: 		10, 11, 01, 00
+Объединённый список: 	00, 01, 11, 10 	10, 11, 01, 00
+К начальному списку дописаны нули: 	000, 001, 011, 010 	10, 11, 01, 00
+К перевёрнутому списку дописаны единицы: 	000, 001, 011, 010 	110, 111, 101, 100"
+  (if (= 1 n)
+    (do (println "0,1") (list "0" "1"))
+    (let [gray-one (gray (- n 1))] 
+      (concat (map #(str  "0" %)
+                gray-one)
+           (map #(str  "1" %)
+                (reverse gray-one))))))
+
+; P49 (**) Gray code.
+(comment "An n-bit Gray code is a sequence of n-bit strings constructed according to certain rules. For example,")
+(comment "n = 1: C(1) = ['0','1']. ")
+(comment "n = 2: C(2) = ['00','01','11','10'].")
+(comment "n = 3: C(3) = ['000','001','011','010','110','111','101','100'].")
+ 
+(defn gray2 [n]
+  (defn list-to-string [l] (reduce #(str %1 %2) l))
+  (loop [nleft n combos '(())]
+    (if (zero? nleft)
+      (map #(list-to-string %) combos)  ; convert list-lists to list-string
+      (recur (dec nleft) (concat (map #(conj % 1) combos) (map #(conj % 0) combos))))))
+
 ;; http://www.gettingclojure.com/cookbook:numbers
 ;; Bitwise operations: bit-and bit-or bit-xor bit-not bit-shift-right bit-shift-left
 
